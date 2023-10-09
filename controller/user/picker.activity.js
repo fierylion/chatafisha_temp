@@ -9,14 +9,14 @@ exports.registPicker = (req, res) => {
             req.body.mname,
             req.body.lastname,
             req.body.phone_number,
-            req.body.email,
             req.body.location,
             req.body.role, // 1 - picker
             req.user['uid'],
             req.file.location
 
         ]
-        db.query("INSERT INTO customer(fname,mname,lname,phone,email,location,role,staff_id,img_url) VALUES(?,?,?,?,?,?,?,?,?)", picker_data, (err) => {
+        console.log(req.file.location)
+        db.query("INSERT INTO customer(fname,mname,lname,phone,location,role,staff_id,img_url) VALUES(?,?,?,?,?,?,?,?)", picker_data, (err) => {
             if (!err) {
                 res.status(200).json({
                     aset: "Success",

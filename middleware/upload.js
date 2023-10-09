@@ -8,7 +8,7 @@ const s3 = new AWS.S3()
 // function to sanitize files and send error for unsupported files
 function sanitizeFile(file, cb) {
     // Define the allowed extension
-    const fileExts = [".png", ".jpg", ".jpeg", ".gif"];
+    const fileExts = [".png", ".jpg", ".jpeg", ".gif", "svg"];
 
     // Check allowed extensions
     const isAllowedExt = fileExts.includes(

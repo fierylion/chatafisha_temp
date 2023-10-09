@@ -18,7 +18,8 @@ exports.userRegistration = (req, res) => {
      */
 
     bcpt.hash(req.body.password, 15).then(hashed => {
-        var user_info = [req.body.u_name, req.body.reg_no, req.body.location, req.body.email, req.body.phone, req.body.role , hashed, req.body.uniID, req.body.collegeID, req.body.department]
+        //registration number wasnt required, decided to use random string
+        var user_info = [req.body.u_name, 'random_33', req.body.location, req.body.email, req.body.phone, req.body.role , hashed, req.body.uniID, req.body.collegeID, req.body.department]
 
         db.query("INSERT INTO user(name,registration_no,location,email,phone_no,role,password,universityID,collegeID,department) VALUES(?,?,?,?,?,?,?,?,?,?)", user_info, (err) => {
 
