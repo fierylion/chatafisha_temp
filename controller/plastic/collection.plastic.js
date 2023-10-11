@@ -1,5 +1,5 @@
 var db = require("../../config/db");
-
+const path = require("path");
 //
 
 // register collected plastic
@@ -7,23 +7,25 @@ exports.registPlastic = (req, res) => {
     
     const populateImages = (collectionID, images, res) => {
         images.forEach((image, ind) => {
-            const data = [collectionID, image.location]
-            if (ind === 0) data.push(1);
-            db.query(
-              `INSERT INTO profile_collection_images(collectionID, image_url${
-                ind === 0 ? ',active' : ''
-              }) VALUES(?,?${ind === 0 ? ',?' : ''})`,
-             data,
-              (err, result) => {
-                if (err) {
-                  res.status(500).json({
-                    aset: 'Failed',
-                    message: 'Failed to register plastic',
-                  })
-                  console.log(err)
-                }
+          //image file
+          const imageFile = '/uploads/' + path.basename(image.path)
+          const data = [collectionID, imageFile]
+          if (ind === 0) data.push(1)
+          db.query(
+            `INSERT INTO profile_collection_images(collectionID, image_url${
+              ind === 0 ? ',active' : ''
+            }) VALUES(?,?${ind === 0 ? ',?' : ''})`,
+            data,
+            (err, result) => {
+              if (err) {
+                res.status(500).json({
+                  aset: 'Failed',
+                  message: 'Failed to register plastic',
+                })
+                console.log(err)
               }
-            )
+            }
+          )
         })  
     }
     if (req.user["role_id"] == 4) {

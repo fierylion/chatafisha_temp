@@ -1,9 +1,12 @@
 var db = require("../../config/db"); // db connection
-
+const path = require("path");
 
 // register picker
 exports.registPicker = (req, res) => {
     if (req.user["role_id"] == 4) {
+      //image file
+      const imageFile = '/uploads/'+ path.basename(req.file.path)
+    
         var picker_data = [
             req.body.firstname,
             req.body.mname,
@@ -12,10 +15,10 @@ exports.registPicker = (req, res) => {
             req.body.location,
             req.body.role, // 1 - picker
             req.user['uid'],
-            req.file.location
+            imageFile
 
         ]
-        console.log(req.file.location)
+     console.log(req.file.path)
         db.query("INSERT INTO customer(fname,mname,lname,phone,location,role,staff_id,img_url) VALUES(?,?,?,?,?,?,?,?)", picker_data, (err) => {
             if (!err) {
                 res.status(200).json({
